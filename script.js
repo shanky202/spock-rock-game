@@ -1,3 +1,4 @@
+import { startConfetti, stopConfetti, removeConfetti } from './confetti.js'
 
 const playerScoreEle = document.getElementById('playerScore');
 const playerChoiceEle = document.getElementById('playerChoice');
@@ -37,6 +38,8 @@ function resetSelected() {
   allGameIcons.forEach((icon) => {
     icon.classList.remove('selected');
   });
+  stopConfetti();
+  removeConfetti();
 }
 
 // Reset Scores & playerChoic/computerChoice
@@ -50,6 +53,7 @@ function resetAll() {
   resultText.textContent = '';
   resetSelected();
 }
+window.resetAll = resetAll;
 
 // Ramdom Computer Choice
 function computerRandomChoice() {
@@ -100,7 +104,8 @@ function updateScore(playerChoice) {
   } else {
     const choice = choices[playerChoice];
     if (choice.defeats.indexOf(computerChoice) > -1) {
-      resultText.textContent = 'You Won!'; 
+      resultText.textContent = 'You Won!';
+      startConfetti(); 
       playerScoreNumber++;
       playerScoreEle.textContent = playerScoreNumber;
     } else {
@@ -147,8 +152,14 @@ function select(playerChoice) {
   }
 
 }
+window.select = select;
 
 // On Startup, set initial values
 resetAll();
+
+
+
+
+
 
 
